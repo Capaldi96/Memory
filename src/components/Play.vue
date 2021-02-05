@@ -1,0 +1,333 @@
+<template>
+    <div class="play-content">
+        <div v-if="!finished" class="game-content">
+            <h1 id="score">Score:{{ score }}</h1>
+            <div :class="memoryCardsGridClass" v-if="!finished">
+                <div
+                    class="scene scene-card"
+                    v-for="card in memoryCards"
+                    :key="card._id"
+                    :class="{ ' remove-card': card.isMatched }"
+                >
+                    <div
+                        class="card"
+                        @click="flip(card)"
+                        :class="{ ' is-flipped': card.isFlipped }"
+                    >
+                        <div class="card-face card-face-front">?</div>
+                        <div class="card-face card-face-back">
+                            <!-- <p>{{ card.name }}</p> -->
+                            <img :src="card.img" :alt="card.name" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <submitScoreComponent
+            v-if="finished"
+            :score="score"
+			:difficulty="props.difficulty"
+        ></submitScoreComponent>
+    </div>
+</template>
+
+<script>
+import { onBeforeMount, ref } from "vue";
+import axios from "axios";
+import submitScoreComponent from "./submitScoreComponent.vue";
+export default {
+    props: {
+        theme: String,
+        difficulty: String,
+    },
+    components: {
+        submitScoreComponent,
+    },
+    setup(props) {
+        onBeforeMount(() => {
+            switch (props.difficulty) {
+                case "Easy":
+                    memoryCardsGridClass.value = "flex-6";
+                    getCards(props.theme, 3);
+                    break;
+                case "Medium":
+                    memoryCardsGridClass.value = "flex-8";
+                    getCards(props.theme, 4);
+                    break;
+                case "Hard":
+                    memoryCardsGridClass.value = "flex-12";
+                    getCards(props.theme, 6);
+                    break;
+                default:
+                    break;
+            }
+        });
+        const memoryCards = ref([]);
+        const memoryCardsGridClass = ref(null);
+        const finished = ref(false);
+        const cards = ref([]);
+        const score = ref(0);
+        let flippedCards = [];
+        async function getCards(group, amount) {
+            await axios
+                .get(
+                    "http://localhost:5000/api/getCards/" + group + "/" + amount
+                )
+                .then((res) => {
+                    cards.value = res.data;
+                    duplicateAndShuffle(cards);
+                })
+                .catch((err) => {
+                    console.log("Something went wrong", err);
+                });
+        }
+        /* Randomize array in-place using Durstenfeld shuffle algorithm */
+        function duplicateAndShuffle(cards) {
+            let cards1 = JSON.parse(JSON.stringify(cards.value));
+            let cards2 = JSON.parse(JSON.stringify(cards.value));
+            memoryCards.value = memoryCards.value.concat(cards1, cards2);
+            for (var i = memoryCards.value.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = memoryCards.value[i];
+                memoryCards.value[i] = memoryCards.value[j];
+                memoryCards.value[j] = temp;
+            }
+        }
+        function flip(card) {
+            if (card.isMatched || card.isFlipped || flippedCards.length === 2)
+                return;
+            card.isFlipped = true;
+
+            if (flippedCards.length < 2) {
+                flippedCards.push(card);
+            }
+            if (flippedCards.length === 2) matchCards(card);
+        }
+        function matchCards() {
+            score.value++;
+            if (flippedCards[0].name === flippedCards[1].name) {
+                setTimeout(() => {
+                    flippedCards.forEach((card) => (card.isMatched = true));
+                    flippedCards = [];
+                    if (
+                        memoryCards.value.every(
+                            (card) => card.isMatched === true
+                        )
+                    ) {
+                        setTimeout(() => (finished.value = true), 1500);
+                    }
+                }, 500);
+            } else {
+                setTimeout(() => {
+                    flippedCards.forEach((card) => (card.isFlipped = false));
+                    flippedCards = [];
+                }, 2000);
+            }
+        }
+
+        return {
+            memoryCards,
+            flip,
+            memoryCardsGridClass,
+            finished,
+			score,
+			props
+        };
+    },
+};
+</script>
+
+<style scoped>
+.play-content {
+    width: 100%;
+    height: 100%;
+}
+.game-content {
+    width: 100%;
+    height: 100%;
+    display: grid;
+	place-items: center;
+}
+.input-container {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-12 {
+    display: flex;
+    flex-wrap: wrap;
+    width: 90%;
+    justify-content: center;
+    align-content: center;
+}
+.flex-12 .scene {
+    margin: 0.8rem;
+    min-height: 18rem;
+    width: 15%;
+    perspective: 600px;
+}
+
+.flex-8 {
+    width: 80%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    overflow: hidden;
+}
+.flex-8 .scene {
+    margin: 1rem;
+    min-height: 20rem;
+    width: 20%;
+    perspective: 600px;
+}
+.flex-6 {
+    width: 60%;
+    display: flex;
+    height: 100%;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+}
+.flex-6 .scene {
+    width: 25%;
+    margin: 2rem;
+    min-height: 22rem;
+    perspective: 600px;
+}
+#score {
+    position: absolute;
+    right: 2rem;
+    top: 1rem;
+}
+.remove-card {
+    animation-name: disappear;
+    animation-duration: 1200ms;
+    animation-timing-function: ease-out;
+    animation-delay: 0;
+    animation-direction: alternate;
+    animation-fill-mode: forwards;
+}
+
+/* ------- iPad 3, 4 and Pro 9.7" ------- */
+/* Portrait */
+@media only screen and (min-width: 1024px) and (max-height: 1366px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1.5) {
+    .flex-12 {
+        width: 95%;
+    }
+    .flex-12 .scene {
+        min-height: 18rem;
+        width: 22%;
+    }
+    .flex-8 {
+        width: 100%;
+    }
+    .flex-8 .scene {
+        margin: 1rem;
+        width: 25%;
+        max-height: 18rem;
+    }
+    .flex-6 {
+        width: 80%;
+    }
+    .flex-6 .scene {
+        width: 25%;
+        min-height: 19rem;
+        margin: 2rem;
+    }
+}
+
+/* Landscape */
+@media only screen and (min-width: 1366px) and (max-height: 1024px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1.5) {
+    .flex-12 .scene {
+        margin: 0.8rem;
+        min-height: 18rem;
+        width: 18%;
+    }
+    .flex-8 {
+        width: 100%;
+    }
+    .flex-8 .scene {
+        width: 20%;
+        margin: 1rem;
+        max-height: 20rem;
+    }
+    .flex-6 {
+        width: 80%;
+    }
+    .flex-6 .scene {
+        width: 23%;
+        min-height: 20rem;
+    }
+}
+
+/* IPAD 1,2, mini */
+/* IPAD 1,2, mini PORTRAIT*/
+@media only screen and (min-width: 768px) and (max-height: 1024px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1) {
+    .flex-12 .scene {
+        margin: 0.5rem;
+        min-height: 14rem;
+        width: 22%;
+    }
+    .flex-12 .card-face-front {
+        font-size: 8rem;
+    }
+    .flex-8 {
+        width: 90%;
+    }
+    .flex-8 .scene {
+        width: 26%;
+        min-height: 15rem;
+        margin: 1rem;
+    }
+    .flex-6 {
+        width: 90%;
+    }
+    .flex-6 .scene {
+        width: 28%;
+        margin: 1rem;
+        min-height: 16rem;
+    }
+}
+/* LANDSCAPE */
+@media only screen and (min-width: 1024px) and (max-height: 768px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1) {
+	.flex-12{
+		width:80%;
+	}
+    .flex-12 .scene {
+        margin: 0.4rem;
+        min-height: 13rem;
+		width:20%;
+    }
+    .flex-12 .card-face-front {
+        font-size: 8rem;
+    }
+    .flex-8 {
+        width: 90%;
+    }
+    .flex-8 .scene {
+        margin: 0.8rem;
+        width: 21%;
+        min-height: 16rem;
+    }
+    .flex-6 {
+        width: 80%;
+    }
+    .flex-6 .scene {
+        margin: 1rem;
+        width: 25%;
+        min-height: 17rem;
+    }
+}
+
+@keyframes disappear {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(0);
+    }
+}
+</style>
