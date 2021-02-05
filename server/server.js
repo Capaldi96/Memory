@@ -19,7 +19,7 @@ app.use(express.json({ limit: '2mb' }));
 app.use(cors());
 
 // add middlewares
-app.use(express.static(path.join(__dirname, '/dist')))
+app.use(express.static(path.join(__dirname, '../dist')))
 
 
 app.get('/api/getCards/:group/:amount', (req, res) => {
@@ -56,9 +56,12 @@ app.post('/api/uploadImage', async (req, res) => {
 		res.status(500).json({ err: 'Something went wrong when uploading the image, try again later.' })
 	}
 })
-app.use((req, res, next) => {
-	res.sendFile(path.join(__dirname, "/dist/index.html"));
-});
+app.get(/.*/, function (req, res) {
+	res.sendFile(path.join(__dirname, '../dist/index.html'))
+})
+// app.use((req, res, next) => {
+// 	res.sendFile(path.join(__dirname, "../dist/index.html"));
+// });
 
 app.listen(port, () => {
 	console.log("Server is listening on port" + port);

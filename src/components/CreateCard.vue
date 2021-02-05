@@ -238,7 +238,7 @@ export default {
             loading.value = true;
             try {
                 let response = await fetch(
-                    "http://localhost:5000/api/uploadImage",
+                    "/api/uploadImage",
                     {
                         method: "POST",
                         body: JSON.stringify({ data: base64Encoded }),
@@ -269,7 +269,7 @@ export default {
             console.log(JSON.stringify(newCard));
             try {
                 const response = await fetch(
-                    "http://localhost:5000/api/addCard",
+                    "/api/addCard",
                     {
                         headers: {
                             Accept: "application/json",

@@ -71,7 +71,7 @@ export default {
         async function getCards(group, amount) {
             await axios
                 .get(
-                    "http://localhost:5000/api/getCards/" + group + "/" + amount
+                    "/api/getCards/" + group + "/" + amount
                 )
                 .then((res) => {
                     cards.value = res.data;

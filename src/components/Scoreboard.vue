@@ -89,7 +89,7 @@ export default {
         }
         async function getScore(group) {
             await axios
-                .get("http://localhost:5000/api/getScoreBoard/" + group)
+                .get("/api/getScoreBoard/" + group)
                 .then((res) => {
                     list.value = res.data;
                     if (easyList.value.length === 0 && group == "Easy")
