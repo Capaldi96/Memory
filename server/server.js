@@ -19,7 +19,7 @@ app.use(express.json({limit: '2mb'}));
 app.use(cors());
 
 // add middlewares
-// app.use(express.static(path.join(__dirname, '/../build')))
+app.use(express.static(path.join(__dirname, '/dist')))
 
 
 app.get('/api/getCards/:group/:amount', (req, res) => {
