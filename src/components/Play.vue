@@ -201,13 +201,13 @@ export default {
 }
 .flex-12 .scene {
     margin: 0.8rem;
-    min-height: 18rem;
-    width: 15%;
+    min-height: 22rem;
+    width: 14%;
     perspective: 600px;
 }
 
 .flex-8 {
-    width: 80%;
+    width: 70%;
     height: 100%;
     display: flex;
     flex-wrap: wrap;
@@ -217,7 +217,7 @@ export default {
 }
 .flex-8 .scene {
     margin: 1rem;
-    min-height: 20rem;
+    min-height: 22rem;
     width: 20%;
     perspective: 600px;
 }
@@ -231,7 +231,7 @@ export default {
 }
 .flex-6 .scene {
     width: 25%;
-    margin: 2rem;
+    margin: 1rem;
     min-height: 22rem;
     perspective: 600px;
 }
@@ -333,12 +333,12 @@ export default {
 /* LANDSCAPE */
 @media only screen and (min-width: 1024px) and (max-height: 768px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1) {
     .flex-12 {
-        width: 80%;
+        width: 100%;
     }
     .flex-12 .scene {
         margin: 0.4rem;
-        min-height: 13rem;
-        width: 20%;
+        min-height: 14rem;
+        width: 15%;
     }
     .flex-12 .card-face-front {
         font-size: 8rem;

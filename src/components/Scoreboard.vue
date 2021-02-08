@@ -35,26 +35,31 @@
                 >Hard</label
             >
         </div>
-        <div id="scoreboard">
-            <table id="leaderboard">
-                <thead>
-                    <th></th>
-                    <th class="name">Name</th>
-                    <th class="time">Time</th>
-                    <th class="score">Score</th>
-                </thead>
-                <tbody>
-                    <tr v-for="(item, index) in list" :key="item._id">
-                        <td class="placement">{{ index + 1 }}.</td>
-                        <td class="name">{{ item.name }}</td>
-                        <td class="time">
-                            {{ formatTime(item.minutes) }}:{{ formatTime(item.seconds) }}
-                        </td>
-                        <td class="score">{{ item.score }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <transition name="fade-in" mode="out-in">
+            <div id="scoreboard" :key="keyValue">
+                <table id="leaderboard">
+                    <thead>
+                        <th></th>
+                        <th class="name">Name</th>
+                        <th class="time">Time</th>
+                        <th class="score">Score</th>
+                    </thead>
+
+                    <tbody>
+                        <tr v-for="(item, index) in list" :key="item._id">
+                            <td class="placement">{{ index + 1 }}.</td>
+                            <td class="name">{{ item.name }}</td>
+                            <td class="time">
+                                {{ formatTime(item.minutes) }}:{{
+                                    formatTime(item.seconds)
+                                }}
+                            </td>
+                            <td class="score">{{ item.score }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </transition>
     </div>
 </template>
 
@@ -76,8 +81,10 @@ export default {
         const list = ref([]);
         const easyList = ref([]);
         const mediumList = ref([]);
-        const hardList = ref([]);
+		const hardList = ref([]);
+		const keyValue = ref(false)
         function changeList(difficulty) {
+			keyValue.value = !keyValue.value;
             if (difficulty === "Easy") {
                 if (easyList.value.length === 0) {
                     getScore("Easy");
@@ -106,14 +113,14 @@ export default {
                 .catch((err) => {
                     console.log("Something went wrong", err);
                 });
-		}
-		function formatTime(time) {
+        }
+        function formatTime(time) {
             if (time < 10) {
                 return "0" + time;
             }
             return time;
         }
-        return { list, changeList, checked,formatTime };
+        return { list, changeList, checked, formatTime,keyValue };
     },
 };
 </script>
@@ -151,7 +158,8 @@ th.name {
     text-align: left;
 }
 td.score,
-td.placement,td.time {
+td.placement,
+td.time {
     text-align: center;
 }
 #leaderboard tr td,
@@ -182,7 +190,7 @@ th {
 /* Portrait */
 @media only screen and (min-width: 1024px) and (max-height: 1366px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1.5) {
     #scoreboard {
-        width: 60%;
+        width: 70%;
     }
     .button-div {
         width: 50%;
@@ -194,7 +202,7 @@ th {
 /* Landscape */
 @media only screen and (min-width: 1366px) and (max-height: 1024px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1.5) {
     #scoreboard {
-        width: 50%;
+        width: 60%;
     }
     .button-div {
         width: 40%;
@@ -205,7 +213,7 @@ th {
 /* LANDSCAPE */
 @media only screen and (min-width: 1024px) and (max-height: 768px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1) {
     #scoreboard {
-        width: 60%;
+        width: 80%;
     }
     .button-div {
         width: 50%;

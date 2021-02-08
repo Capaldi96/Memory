@@ -25,11 +25,11 @@
 import { ref } from "vue";
 export default {
     name: "App",
-    // watch: {
-    //     $route() {
-    //         this.toggleMenu();
-    //     },
-    // },
+    watch: {
+        $route() {
+            this.showMenu = false;
+        },
+    },
     components: {},
     setup() {
         const showMenu = ref(false);
@@ -183,7 +183,6 @@ body {
     background: transparent;
     transition: all 0.3s ease-in-out;
 	box-shadow: 0px 0px 15px 3px #c77dff;
-    
 }
 .secondary-button:not(:disabled):hover,
 .secondary-button:not(:disabled):focus {
@@ -255,6 +254,7 @@ h3 {
     border-radius: 1rem;
     height: 100%;
     cursor: pointer;
+	border: 2px solid #e0aaff;
     transform-style: preserve-3d;
     transform-origin: center right;
     transition: transform 1s;
@@ -268,14 +268,14 @@ h3 {
     width: 100%;
     height: 100%;
     color: #e0aaff;
-    border: 2px solid #e0aaff;
+	border-spacing: 0;
     text-align: center;
     backface-visibility: hidden;
 }
 .card-face-back {
     transform: rotateY(180deg);
     box-shadow: 20px 4px 4px rgba(16, 0, 43, 0.25);
-    border-radius: 1rem;
+    
 }
 .card-face-back img {
     width: 100%;
@@ -294,7 +294,6 @@ h3 {
     display: grid;
     place-items: center;
     font-size: 10rem;
-    border-radius: 1rem;
     font-weight: 100;
     text-shadow: 10px 4px 4px rgba(16, 0, 43, 0.25);
     box-shadow: 20px 4px 4px rgba(16, 0, 43, 0.25);
