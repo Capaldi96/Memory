@@ -110,8 +110,8 @@ body {
 #burger {
     display: block;
     position: absolute;
-    top: 3rem;
-    left: 3rem;
+    top: 2rem;
+    left: 2rem;
     z-index: 1000;
     -webkit-user-select: none;
     user-select: none;

@@ -230,7 +230,7 @@ export default {
     justify-content: center;
 }
 .flex-6 .scene {
-    width: 25%;
+    width: 23%;
     margin: 1rem;
     min-height: 22rem;
     perspective: 600px;
@@ -258,7 +258,8 @@ export default {
     }
     .flex-12 .scene {
         min-height: 18rem;
-        width: 22%;
+        width: 23%;
+		margin:.5rem;
     }
     .flex-8 {
         width: 100%;
@@ -269,12 +270,11 @@ export default {
         max-height: 18rem;
     }
     .flex-6 {
-        width: 80%;
+        width: 90%;
     }
     .flex-6 .scene {
-        width: 25%;
-        min-height: 19rem;
-        margin: 2rem;
+        width: 28%;
+        min-height: 23rem;
     }
 }
 
@@ -305,9 +305,12 @@ export default {
 /* IPAD 1,2, mini */
 /* IPAD 1,2, mini PORTRAIT*/
 @media only screen and (min-width: 768px) and (max-height: 1024px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1) {
-    .flex-12 .scene {
+    .flex-12{
+		width:100%;
+	}
+	.flex-12 .scene {
         margin: 0.5rem;
-        min-height: 14rem;
+        min-height: 15rem;
         width: 22%;
     }
     .flex-12 .card-face-front {
@@ -317,17 +320,17 @@ export default {
         width: 90%;
     }
     .flex-8 .scene {
-        width: 26%;
-        min-height: 15rem;
-        margin: 1rem;
+        width: 30%;
+        min-height: 17rem;
+        margin: 0.5rem;
     }
     .flex-6 {
-        width: 90%;
+        width: 100%;
     }
     .flex-6 .scene {
-        width: 28%;
+        width: 27%;
         margin: 1rem;
-        min-height: 16rem;
+        min-height: 18rem;
     }
 }
 /* LANDSCAPE */
