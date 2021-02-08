@@ -7,7 +7,13 @@
     <div class="sidebar" :class="{ active: showMenu }">
         <div class="nav-links">
             <router-link to="/">Tutorial</router-link>
-            <router-link to="/Play/Easy/None">Quickplay</router-link>
+            <router-link :to="{
+                name: 'Play',
+                params: {
+                    difficulty: 'Easy',
+                    theme: 'None',
+                },
+            }">Quickplay</router-link>
             <router-link to="/Setup">Setup Game</router-link>
             <router-link to="/Scoreboard/Easy">Scoreboard</router-link>
             <router-link to="/Create">Create a card</router-link>

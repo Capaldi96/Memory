@@ -248,7 +248,7 @@ export default {
                 let data = await response.json();
                 let newCard = {
                     name: form.name,
-                    image:
+                    img:
                         "https://res.cloudinary.com/deusclkek/image/upload/v1601296218/" +
                         data.id,
                     group: form.group,
