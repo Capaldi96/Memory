@@ -7,14 +7,7 @@
     <div class="sidebar" :class="{ active: showMenu }">
         <div class="nav-links">
             <router-link to="/">Tutorial</router-link>
-            <router-link :to="{
-                name: 'Play',
-                params: {
-                    difficulty: 'Easy',
-                    theme: 'None',
-                },
-            }">Quickplay</router-link>
-            <router-link to="/Setup">Setup Game</router-link>
+            <router-link to="/Setup">Play</router-link>
             <router-link to="/Scoreboard/Easy">Scoreboard</router-link>
             <router-link to="/Create">Create a card</router-link>
         </div>
@@ -216,7 +209,7 @@ input[type="radio"]:checked+label{
     flex-direction: column;
     justify-content: space-evenly;
     margin-top: 5rem;
-    height: 30rem;
+    height: 25rem;
     padding-left: 2rem;
 }
 .nav-links a {

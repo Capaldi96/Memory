@@ -14,16 +14,28 @@
                 >
                     <div class="card-face card-face-front">?</div>
                     <div class="card-face card-face-back">
-						<h1>{{card.header}}</h1>
+                        <h1>{{ card.header }}</h1>
                         <p>{{ card.content }}</p>
                     </div>
                 </div>
             </div>
         </div>
-
-        <router-link class="button primary-button" to="/Setup"
-            >Begin</router-link
-        >
+        <div class="button-div">
+            <router-link class="button primary-button" to="/Setup"
+                >Begin</router-link
+            >
+            <router-link
+                class="button primary-button"
+                :to="{
+                    name: 'Play',
+                    params: {
+                        difficulty: 'Easy',
+                        theme: 'None',
+                    },
+                }"
+                >Quickplay</router-link
+            >
+        </div>
     </div>
 </template>
 
@@ -100,6 +112,13 @@ export default {
     transition: transform 1s;
     background: #7b2cbf;
 }
+.button-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 40%;
+}
 .card.is-flipped {
     transform: translateX(-100%) rotateY(180deg);
 }
@@ -115,12 +134,12 @@ export default {
     transform: rotateY(180deg);
     box-shadow: 20px 4px 4px rgba(16, 0, 43, 0.25);
     border-radius: 1rem;
-	padding:0.5rem;
+    padding: 0.5rem;
 }
 .card-face-back p {
     font-size: 1.3rem;
     font-weight: 100;
-	padding:0;
+    padding: 0;
     text-shadow: 3px 2px 1px rgba(16, 0, 43, 0.25);
 }
 .card-face-front {

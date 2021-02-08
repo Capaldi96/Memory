@@ -127,7 +127,7 @@ export default {
             if (flippedCards.length === 2) matchCards(card);
         }
         function startTimer() {
-            // ticking();
+            ticking();
             interval = setInterval(ticking, 1000);
             time.start = true;
         }
