@@ -109,7 +109,7 @@ function getGroupOfCollection(callback, amount, group, collection) {
 		}
 		
 	}else if(collection === 'Scoreboard'){
-		filter = [{ $match: { difficulty: group }},{ $sort:{ score: 1} }];
+		filter = [{ $match: { difficulty: group }},{ $sort:{ score: 1, minutes:-1, seconds:-1} }];
 		console.log('scoreboard')
 	}
 	getGroup(filter, callback, collection)

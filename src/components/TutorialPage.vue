@@ -14,6 +14,7 @@
                 >
                     <div class="card-face card-face-front">?</div>
                     <div class="card-face card-face-back">
+						<h1>{{card.header}}</h1>
                         <p>{{ card.content }}</p>
                     </div>
                 </div>
@@ -32,31 +33,35 @@ export default {
     setup() {
         const cards = ref([
             {
+                header: "A Match:",
                 content:
-                    "A Match: A player makes a match if the two cards turned picture-side-up are identical.",
+                    "A player makes a match if the two cards turned picture-side-up are identical.",
                 isFlipped: false,
             },
             {
+                header: "A Miss:",
                 content:
-                    "A Miss: A player misses if the two cards turned over are not identical. When a player misses, he or she turns the two cards picture-side-down again, in the same place.",
+                    "A player misses if the two cards turned over are not identical and the two cards are turned back.",
                 isFlipped: false,
             },
             {
+                header: "The Game:",
                 content:
                     "The game continues until all cards have been matched and removed from the playing area.",
                 isFlipped: false,
             },
             {
+                header: "Score:",
                 content:
-                    "Get as few points as possible, one turn equals one point.",
+                    "Get as low score as possible, one turn equals one score. Don't forget to keep and eye on the clock.",
                 isFlipped: false,
             },
         ]);
 
         function flip(card) {
             card.isFlipped = !card.isFlipped;
-		}
-		setTimeout(() => flip(cards.value[0]),1500);
+        }
+        setTimeout(() => flip(cards.value[0]), 1500);
         return { cards, flip };
     },
 };
@@ -110,13 +115,12 @@ export default {
     transform: rotateY(180deg);
     box-shadow: 20px 4px 4px rgba(16, 0, 43, 0.25);
     border-radius: 1rem;
+	padding:0.5rem;
 }
 .card-face-back p {
-    margin-top: 5%;
     font-size: 1.3rem;
     font-weight: 100;
-    padding: 1rem;
-    /* text-shadow: 10px 4px 4px rgba(16, 0, 43, 0.25); */
+	padding:0;
     text-shadow: 3px 2px 1px rgba(16, 0, 43, 0.25);
 }
 .card-face-front {
@@ -138,7 +142,6 @@ export default {
         grid-template-columns: 15rem 15rem;
         grid-gap: 3rem;
     }
-    
 }
 /* Landscape */
 @media only screen and (min-width: 1366px) and (max-height: 1024px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1.5) {
@@ -160,7 +163,6 @@ export default {
 }
 /* IPAD 1,2, mini PORTRAIT*/
 @media only screen and (min-width: 768px) and (max-height: 1024px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1) {
-    
     .scene {
         height: 17rem;
     }

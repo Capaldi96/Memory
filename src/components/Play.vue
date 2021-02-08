@@ -1,7 +1,10 @@
 <template>
     <div class="play-content">
         <div v-if="!finished" class="game-content">
-            <h1 id="score">Score:{{ score }}</h1>
+            <div id="score">
+                <h1>Score:{{ score }}</h1>
+                <h1>{{ min }}:{{ sec }}</h1>
+            </div>
             <div :class="memoryCardsGridClass" v-if="!finished">
                 <div
                     class="scene scene-card"
@@ -16,7 +19,6 @@
                     >
                         <div class="card-face card-face-front">?</div>
                         <div class="card-face card-face-back">
-                            <!-- <p>{{ card.name }}</p> -->
                             <img :src="card.img" :alt="card.name" />
                         </div>
                     </div>
@@ -26,13 +28,14 @@
         <submitScoreComponent
             v-if="finished"
             :score="score"
-			:difficulty="props.difficulty"
+            :difficulty="props.difficulty"
+			:time="time"
         ></submitScoreComponent>
     </div>
 </template>
 
 <script>
-import { onBeforeMount, ref } from "vue";
+import { onBeforeMount, reactive, ref } from "vue";
 import axios from "axios";
 import submitScoreComponent from "./submitScoreComponent.vue";
 export default {
@@ -42,6 +45,20 @@ export default {
     },
     components: {
         submitScoreComponent,
+    },
+    computed: {
+        sec() {	
+            if (this.time.seconds < 10) {
+                return "0" + this.time.seconds;
+            }
+            return this.time.seconds;
+        },
+        min() {
+            if (this.time.minutes < 10) {
+                return "0" + this.time.minutes;
+            }
+            return this.time.minutes;
+        },
     },
     setup(props) {
         onBeforeMount(() => {
@@ -67,12 +84,16 @@ export default {
         const finished = ref(false);
         const cards = ref([]);
         const score = ref(0);
+		const time = reactive({
+            start: false,
+            minutes: 0,
+            seconds: 0,
+        });
+		let interval;
         let flippedCards = [];
         async function getCards(group, amount) {
             await axios
-                .get(
-                    "/api/getCards/" + group + "/" + amount
-                )
+                .get("/api/getCards/" + group + "/" + amount)
                 .then((res) => {
                     cards.value = res.data;
                     duplicateAndShuffle(cards);
@@ -97,11 +118,26 @@ export default {
             if (card.isMatched || card.isFlipped || flippedCards.length === 2)
                 return;
             card.isFlipped = true;
-
+            if (!time.start) {
+                startTimer();
+            }
             if (flippedCards.length < 2) {
                 flippedCards.push(card);
             }
             if (flippedCards.length === 2) matchCards(card);
+        }
+        function startTimer() {
+            // ticking();
+            interval = setInterval(ticking, 1000);
+            time.start = true;
+        }
+        function ticking() {
+            if (time.seconds !== 59) {
+                time.seconds++;
+                return;
+            }
+            time.minutes++;
+            time.seconds = 0;
         }
         function matchCards() {
             score.value++;
@@ -114,6 +150,7 @@ export default {
                             (card) => card.isMatched === true
                         )
                     ) {
+                        clearInterval(interval);
                         setTimeout(() => (finished.value = true), 1500);
                     }
                 }, 500);
@@ -130,8 +167,9 @@ export default {
             flip,
             memoryCardsGridClass,
             finished,
-			score,
-			props
+            score,
+            props,
+            time,
         };
     },
 };
@@ -146,7 +184,7 @@ export default {
     width: 100%;
     height: 100%;
     display: grid;
-	place-items: center;
+    place-items: center;
 }
 .input-container {
     width: 40%;
@@ -201,6 +239,7 @@ export default {
     position: absolute;
     right: 2rem;
     top: 1rem;
+	text-align: center;
 }
 .remove-card {
     animation-name: disappear;
@@ -293,13 +332,13 @@ export default {
 }
 /* LANDSCAPE */
 @media only screen and (min-width: 1024px) and (max-height: 768px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1) {
-	.flex-12{
-		width:80%;
-	}
+    .flex-12 {
+        width: 80%;
+    }
     .flex-12 .scene {
         margin: 0.4rem;
         min-height: 13rem;
-		width:20%;
+        width: 20%;
     }
     .flex-12 .card-face-front {
         font-size: 8rem;

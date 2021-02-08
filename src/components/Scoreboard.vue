@@ -40,12 +40,16 @@
                 <thead>
                     <th></th>
                     <th class="name">Name</th>
+                    <th class="time">Time</th>
                     <th class="score">Score</th>
                 </thead>
                 <tbody>
                     <tr v-for="(item, index) in list" :key="item._id">
                         <td class="placement">{{ index + 1 }}.</td>
                         <td class="name">{{ item.name }}</td>
+                        <td class="time">
+                            {{ formatTime(item.minutes) }}:{{ formatTime(item.seconds) }}
+                        </td>
                         <td class="score">{{ item.score }}</td>
                     </tr>
                 </tbody>
@@ -102,8 +106,14 @@ export default {
                 .catch((err) => {
                     console.log("Something went wrong", err);
                 });
+		}
+		function formatTime(time) {
+            if (time < 10) {
+                return "0" + time;
+            }
+            return time;
         }
-        return { list, changeList, checked };
+        return { list, changeList, checked,formatTime };
     },
 };
 </script>
@@ -141,7 +151,7 @@ th.name {
     text-align: left;
 }
 td.score,
-td.placement {
+td.placement,td.time {
     text-align: center;
 }
 #leaderboard tr td,

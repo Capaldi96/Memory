@@ -4,6 +4,7 @@
         <div class="score-form" v-if="!loading">
             <div class="form-text" v-if="!uploaded">
                 <h1>Good job! You got {{ score }} points.</h1>
+                <h1>{{ timeMessage }}</h1>
                 <h2>Enter your name below and submit your score.</h2>
             </div>
             <div class="form-text" v-else>
@@ -30,16 +31,16 @@
                     autocomplete="off"
                     required
                 />
-                    <p
-                        :style="{
-                            visibility:
-                                form.touched && !validateName()
-                                    ? 'visible'
-                                    : 'hidden',
-                        }"
-                    >
-                        {{ form.message }}
-                    </p>
+                <p
+                    :style="{
+                        visibility:
+                            form.touched && !validateName()
+                                ? 'visible'
+                                : 'hidden',
+                    }"
+                >
+                    {{ form.message }}
+                </p>
             </div>
             <div class="button-div" v-if="!uploaded">
                 <button
@@ -80,7 +81,7 @@
 </template>
 
 <script>
-import { reactive, ref } from "vue";
+import { reactive, ref, onBeforeMount } from "vue";
 import { SwappingSquaresSpinner } from "epic-spinners";
 
 export default {
@@ -90,8 +91,24 @@ export default {
     props: {
         score: Number,
         difficulty: String,
-    },
+        time: Object,
+	},
     setup(props) {
+        onBeforeMount(() => {
+            console.log(props.time);
+            if (props.time.minutes === 0) {
+                timeMessage.value =
+                    "You finished after " + props.time.seconds + " seconds.";
+            } else {
+                timeMessage.value =
+                    "You finished after " +
+                    props.time.minutes +
+                    " minutes and " +
+                    props.time.seconds +
+                    " seconds.";
+            }
+        });
+        const timeMessage = ref("");
         const form = reactive({
             touched: false,
             message: "Let's not forget the name!",
@@ -119,20 +136,19 @@ export default {
             let tmp = {
                 name: form.name,
                 score: props.score,
-                difficulty: props.difficulty,
+				difficulty: props.difficulty,
+				minutes:props.time.minutes,
+				seconds:props.time.seconds
             };
             try {
-                const response = await fetch(
-                    "/api/submitScore",
-                    {
-                        headers: {
-                            Accept: "application/json",
-                            "Content-Type": "application/json",
-                        },
-                        method: "POST",
-                        body: JSON.stringify(tmp),
-                    }
-                );
+                const response = await fetch("/api/submitScore", {
+                    headers: {
+                        Accept: "application/json",
+                        "Content-Type": "application/json",
+                    },
+                    method: "POST",
+                    body: JSON.stringify(tmp),
+                });
                 const text = await response.text();
                 let data = JSON.parse(text);
                 console.log(data);
@@ -142,7 +158,15 @@ export default {
             uploaded.value = true;
             loading.value = false;
         }
-        return { submitScore, form, validateName, loading, uploaded, props };
+        return {
+            submitScore,
+            form,
+            validateName,
+            loading,
+            uploaded,
+            props,
+            timeMessage,
+        };
     },
 };
 </script>
