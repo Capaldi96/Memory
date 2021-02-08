@@ -260,7 +260,6 @@ h3 {
     border-radius: 1rem;
     height: 100%;
     cursor: pointer;
-	border: 2px solid #e0aaff;
     transform-style: preserve-3d;
     transform-origin: center right;
     transition: transform 1s;
@@ -280,7 +279,8 @@ h3 {
 }
 .card-face-back {
     transform: rotateY(180deg);
-    box-shadow: 20px 4px 4px rgba(16, 0, 43, 0.25);
+    box-shadow: 20px 4px 4px rgba(16, 0, 43, 0.40);
+	border-radius: 1rem;
     
 }
 .card-face-back img {
@@ -299,10 +299,12 @@ h3 {
 .card-face-front {
     display: grid;
     place-items: center;
+	border: 2px solid #e0aaff;
+	border-radius: 1rem;
     font-size: 10rem;
     font-weight: 100;
     text-shadow: 10px 4px 4px rgba(16, 0, 43, 0.25);
-    box-shadow: 20px 4px 4px rgba(16, 0, 43, 0.25);
+    box-shadow: 20px 4px 4px rgba(16, 0, 43, 0.40);
 }
 label {
     font-size: 2rem;
