@@ -170,7 +170,6 @@ body {
 }
 .primary-button:not(:disabled):hover,
 .primary-button:not(:disabled):focus {
-    transform: scale(1.1);
     box-shadow: 0px 0px 5px 4px #c77dff;
 }
 .primary-button:disabled {
@@ -274,7 +273,6 @@ h3 {
     transform: rotateY(180deg);
     box-shadow: 20px 4px 4px rgba(16, 0, 43, 0.40);
 	border-radius: 1rem;
-    
 }
 .card-face-back img {
     width: 100%;
@@ -282,10 +280,8 @@ h3 {
     height: 100%;
 }
 .card-face-back p {
-    margin-top: 5%;
-    font-size: 1.3rem;
     font-weight: 100;
-    padding: 1rem;
+	margin-top:1rem;
     /* text-shadow: 10px 4px 4px rgba(16, 0, 43, 0.25); */
     text-shadow: 3px 2px 1px rgba(16, 0, 43, 0.25);
 }
@@ -337,7 +333,7 @@ input[type="text"]:focus {
 }
 
 p {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     color: #c77dff;
 }
 
@@ -377,5 +373,34 @@ p {
     #name-img {
         width: 50%;
     }
+}
+
+
+
+/* ----------- iPhone X ----------- */
+/* Portrait */
+@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: portrait) {
+	#name-img{
+		width:60%;
+	}
+	#burger{
+		top:1rem;
+		left:1rem;
+	}
+}
+
+/* Landscape */
+@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: landscape) {
+	#burger{
+		top:1rem;
+		left:1rem;
+	}
+	.active{ width:12rem;}
+	.nav-links{
+		height:15rem;
+	}
+	.nav-links a{
+		font-size: 1.2rem;
+	}
 }
 </style>

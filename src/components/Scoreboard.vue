@@ -41,6 +41,7 @@
                     <thead>
                         <th></th>
                         <th class="name">Name</th>
+						<th class="theme">Theme</th>
                         <th class="time">Time</th>
                         <th class="score">Score</th>
                     </thead>
@@ -49,6 +50,7 @@
                         <tr v-for="(item, index) in list" :key="item._id">
                             <td class="placement">{{ index + 1 }}.</td>
                             <td class="name">{{ item.name }}</td>
+							<td class="theme">{{ item.theme }}</td>
                             <td class="time">
                                 {{ formatTime(item.minutes) }}:{{
                                     formatTime(item.seconds)
@@ -144,7 +146,7 @@ input[type="radio"] {
     display: none;
 }
 #scoreboard {
-    width: 40%;
+    width: 60%;
     display: flex;
     flex-direction: column;
     height: 65%;
@@ -159,7 +161,7 @@ th.name {
 }
 td.score,
 td.placement,
-td.time {
+td.time,td.theme {
     text-align: center;
 }
 #leaderboard tr td,
@@ -190,19 +192,16 @@ th {
 /* Portrait */
 @media only screen and (min-width: 1024px) and (max-height: 1366px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1.5) {
     #scoreboard {
-        width: 70%;
+        width: 90%;
     }
     .button-div {
         width: 50%;
-    }
-    .content {
-        height: 80%;
     }
 }
 /* Landscape */
 @media only screen and (min-width: 1366px) and (max-height: 1024px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1.5) {
     #scoreboard {
-        width: 60%;
+        width: 80%;
     }
     .button-div {
         width: 40%;
@@ -213,7 +212,7 @@ th {
 /* LANDSCAPE */
 @media only screen and (min-width: 1024px) and (max-height: 768px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1) {
     #scoreboard {
-        width: 80%;
+        width: 95%;
     }
     .button-div {
         width: 50%;
@@ -225,8 +224,11 @@ th {
 /* IPAD 1,2, mini PORTRAIT*/
 @media only screen and (min-width: 768px) and (max-height: 1024px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1) {
     #scoreboard {
-        width: 80%;
+        width: 90%;
     }
+	.theme{
+		display:none;
+	}
     .button-div {
         width: 70%;
     }

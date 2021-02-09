@@ -101,16 +101,8 @@ export default {
     height: 20rem;
     perspective: 600px;
 }
-.card {
-    position: relative;
-    width: 100%;
-    border-radius: 1rem;
-    height: 100%;
-    cursor: pointer;
-    transform-style: preserve-3d;
-    transform-origin: center right;
-    transition: transform 1s;
-    background: #7b2cbf;
+.card-face-back {
+    padding: 1rem 0;
 }
 .button-div {
     display: flex;
@@ -118,38 +110,6 @@ export default {
     justify-content: space-around;
     align-items: center;
     width: 40%;
-}
-.card.is-flipped {
-    transform: translateX(-100%) rotateY(180deg);
-}
-.card-face {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    color: #e0aaff;
-    text-align: center;
-    backface-visibility: hidden;
-}
-.card-face-back {
-    transform: rotateY(180deg);
-    box-shadow: 20px 4px 4px rgba(16, 0, 43, 0.25);
-    border-radius: 1rem;
-    padding: 0.5rem;
-}
-.card-face-back p {
-    font-size: 1.3rem;
-    font-weight: 100;
-    padding: 0;
-    text-shadow: 3px 2px 1px rgba(16, 0, 43, 0.25);
-}
-.card-face-front {
-    display: grid;
-    place-items: center;
-    font-size: 10rem;
-    border-radius: 1rem;
-    font-weight: 100;
-    text-shadow: 10px 4px 4px rgba(16, 0, 43, 0.25);
-    box-shadow: 20px 4px 4px rgba(16, 0, 43, 0.25);
 }
 /* ------- iPad 3, 4 and Pro 9.7" ------- */
 /* Portrait */
@@ -176,21 +136,49 @@ export default {
         grid-column-gap: 2rem;
         grid-template-columns: 13rem 13rem 13rem 13rem;
     }
-    .card-face-back p {
+    /* .card-face-back p {
         font-size: 1.3rem;
-    }
+    } */
 }
 /* IPAD 1,2, mini PORTRAIT*/
 @media only screen and (min-width: 768px) and (max-height: 1024px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1) {
     .scene {
         height: 17rem;
     }
-    .card-face-back p {
+    /* .card-face-back p {
         font-size: 1.2rem;
-    }
+    } */
     .card-grid {
         grid-template-columns: 12rem 12rem;
         grid-gap: 2rem;
+    }
+}
+/* ----------- iPhone X ----------- */
+/* Portrait */
+@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: portrait) {
+    .card-grid {
+        grid-template-columns: 11rem 11rem;
+        grid-gap: 0.5rem;
+    }
+    .scene {
+        height: 15rem;
+    }
+    .button-div {
+        width: 100%;
+    }
+}
+
+/* Landscape */
+@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: landscape) {
+    .card-grid {
+        grid-template-columns: 11rem 11rem 10rem 10rem;
+        grid-gap: 1rem;
+    }
+    .scene {
+        height: 15rem;
+    }
+    .button-div {
+        width: 100%;
     }
 }
 </style>

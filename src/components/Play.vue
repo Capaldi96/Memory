@@ -29,6 +29,7 @@
             v-if="finished"
             :score="score"
             :difficulty="props.difficulty"
+			:theme="props.theme"
 			:time="time"
         ></submitScoreComponent>
     </div>

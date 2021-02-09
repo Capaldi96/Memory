@@ -26,7 +26,7 @@ function get(filter, callback, collection) {
 		}
 	})
 }
-function getGroup(filter, callback,collection) {
+function getGroup(filter, callback, collection) {
 	MongoClient.connect(url, { useUnifiedTopology: true }, async (error, client) => {
 		if (error) {
 			callback('Error, could not connect to database', error.message)
@@ -104,16 +104,18 @@ function getGroupOfCollection(callback, amount, group, collection) {
 	if (collection === 'Cards') {
 		if (group === 'None') {
 			filter = [{ $sample: { size: parseInt(amount) } }];
-		} else {
+		} else if (group === 'Customs') {
+			filter = [{ $match: { custom: true } }, { $sample: { size: parseInt(amount) } }]
+		}
+		else {
 			filter = [{ $match: { group: group } }, { $sample: { size: parseInt(amount) } }];
 		}
-		
-	}else if(collection === 'Scoreboard'){
-		filter = [{ $match: { difficulty: group }},{ $sort:{ score: 1, minutes:1, seconds:1} }];
+
+	} else if (collection === 'Scoreboard') {
+		filter = [{ $match: { difficulty: group } }, { $sort: { score: 1, minutes: 1, seconds: 1 } }];
 		console.log('scoreboard')
 	}
 	getGroup(filter, callback, collection)
-
 }
 module.exports = {
 	getAll,

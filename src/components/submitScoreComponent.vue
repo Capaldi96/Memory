@@ -90,12 +90,12 @@ export default {
     },
     props: {
         score: Number,
-        difficulty: String,
-        time: Object,
+		difficulty: String,
+		theme:String,
+		time: Object,
 	},
     setup(props) {
         onBeforeMount(() => {
-            console.log(props.time);
             if (props.time.minutes === 0) {
                 timeMessage.value =
                     "You finished after " + props.time.seconds + " seconds.";
@@ -137,6 +137,7 @@ export default {
                 name: form.name,
                 score: props.score,
 				difficulty: props.difficulty,
+				theme:props.theme,
 				minutes:props.time.minutes,
 				seconds:props.time.seconds
             };
