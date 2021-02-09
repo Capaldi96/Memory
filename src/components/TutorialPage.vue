@@ -92,7 +92,6 @@ export default {
     display: grid;
     grid-template-columns: 15rem 15rem 15rem 15rem;
     place-items: center;
-    justify-items: center;
     grid-auto-rows: auto;
     grid-gap: 5rem;
 }
@@ -157,7 +156,7 @@ export default {
 /* Portrait */
 @media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: portrait) {
     .card-grid {
-        grid-template-columns: 11rem 11rem;
+        grid-template-columns: 10rem 10rem;
         grid-gap: 0.5rem;
     }
     .scene {
@@ -166,19 +165,42 @@ export default {
     .button-div {
         width: 100%;
     }
+    .card-face-back {
+        padding: 0.5rem 0.2rem;
+    }
+    .card-face-back h1 {
+        font-size: 1.5rem;
+    }
+    .card-face-back p {
+        font-size: 1.1rem;
+    }
 }
 
 /* Landscape */
 @media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: landscape) {
+    .content {
+        height: 100%;
+        justify-content: space-around;
+		padding-top: 2rem;
+    }
     .card-grid {
-        grid-template-columns: 11rem 11rem 10rem 10rem;
+        grid-template-columns: 10rem 10rem 10rem 10rem;
         grid-gap: 1rem;
     }
     .scene {
-        height: 15rem;
+        height: 13rem;
     }
     .button-div {
-        width: 100%;
+        width: 50%;
+    }
+    .card-face-back {
+        padding: 0.5rem 0.2rem;
+    }
+    .card-face-back h1 {
+        font-size: 1.5rem;
+    }
+    .card-face-back p {
+        font-size: unset;
     }
 }
 </style>

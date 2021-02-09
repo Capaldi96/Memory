@@ -180,16 +180,16 @@ body {
 .secondary-button {
     background: transparent;
     transition: all 0.3s ease-in-out;
-	box-shadow: 0px 0px 15px 3px #c77dff;
+    box-shadow: 0px 0px 15px 3px #c77dff;
 }
 .secondary-button:not(:disabled):hover,
 .secondary-button:not(:disabled):focus {
     background: #7b2cbf;
-	box-shadow: 0px 0px 15px 4px #c77dff;
+    box-shadow: 0px 0px 15px 4px #c77dff;
 }
-input[type="radio"]:checked+label{
-	background: #7b2cbf;
-	box-shadow: 0px 0px 15px 4px #c77dff;
+input[type="radio"]:checked + label {
+    background: #7b2cbf;
+    box-shadow: 0px 0px 15px 4px #c77dff;
 }
 .sidebar {
     height: 100%; /* 100% Full-height */
@@ -217,8 +217,8 @@ input[type="radio"]:checked+label{
     color: #c77dff;
     text-shadow: 10px 4px 4px rgba(16, 0, 43, 0.25);
 }
-.nav-links a.router-link-active{
-	text-decoration: underline;
+.nav-links a.router-link-active {
+    text-decoration: underline;
 }
 .active {
     width: 20rem;
@@ -265,14 +265,14 @@ h3 {
     width: 100%;
     height: 100%;
     color: #e0aaff;
-	border-spacing: 0;
+    border-spacing: 0;
     text-align: center;
     backface-visibility: hidden;
 }
 .card-face-back {
     transform: rotateY(180deg);
-    box-shadow: 20px 4px 4px rgba(16, 0, 43, 0.40);
-	border-radius: 1rem;
+    box-shadow: 20px 4px 4px rgba(16, 0, 43, 0.4);
+    border-radius: 1rem;
 }
 .card-face-back img {
     width: 100%;
@@ -281,19 +281,19 @@ h3 {
 }
 .card-face-back p {
     font-weight: 100;
-	margin-top:1rem;
+    margin-top: 1rem;
     /* text-shadow: 10px 4px 4px rgba(16, 0, 43, 0.25); */
     text-shadow: 3px 2px 1px rgba(16, 0, 43, 0.25);
 }
 .card-face-front {
     display: grid;
     place-items: center;
-	border: 2px solid #e0aaff;
-	border-radius: 1rem;
+    border: 2px solid #e0aaff;
+    border-radius: 1rem;
     font-size: 10rem;
     font-weight: 100;
     text-shadow: 10px 4px 4px rgba(16, 0, 43, 0.25);
-    box-shadow: 20px 4px 4px rgba(16, 0, 43, 0.40);
+    box-shadow: 20px 4px 4px rgba(16, 0, 43, 0.4);
 }
 label {
     font-size: 2rem;
@@ -375,32 +375,50 @@ p {
     }
 }
 
-
-
 /* ----------- iPhone X ----------- */
 /* Portrait */
 @media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: portrait) {
-	#name-img{
-		width:60%;
-	}
-	#burger{
-		top:1rem;
-		left:1rem;
-	}
+    #name-img {
+        display: none;
+    }
+    #burger {
+        top: 1rem;
+        left: 1rem;
+    }
+    .active {
+        width: 60%;
+        border-radius: 0 3rem 3rem 0;
+    }
+    .nav-links {
+        height: 20rem;
+        margin-top: 3rem;
+        padding-left: 1rem;
+    }
+	.nav-links a {
+        font-size: 1.2rem;
+    }
 }
 
 /* Landscape */
 @media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: landscape) {
-	#burger{
-		top:1rem;
-		left:1rem;
-	}
-	.active{ width:12rem;}
-	.nav-links{
-		height:15rem;
-	}
-	.nav-links a{
-		font-size: 1.2rem;
-	}
+    #name-img {
+        display: none;
+    }
+    #burger {
+        top: 1rem;
+        left: 1rem;
+    }
+    .active {
+        width: 12rem;
+        border-radius: 0 3rem 3rem 0;
+    }
+    .nav-links {
+        height: 15rem;
+        margin-top: 3rem;
+        padding-left: 1rem;
+    }
+    .nav-links a {
+        font-size: 1.2rem;
+    }
 }
 </style>
