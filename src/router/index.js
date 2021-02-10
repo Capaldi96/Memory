@@ -2,8 +2,10 @@ import { createWebHistory, createRouter } from "vue-router";
 import Setup from "../components/StartGame.vue";
 import Tutorial from "../components/TutorialPage.vue";
 import Play from "../components/Play.vue";
-import Scoreboard from "../components/Scoreboard.vue"
-import CreateCard from "../components/CreateCard.vue"
+import Scoreboard from "../components/Scoreboard.vue";
+import CreateCard from "../components/CreateCard.vue";
+import Gallery from "../components/Gallery.vue";
+
 
 const routes = [
 	{
@@ -33,6 +35,11 @@ const routes = [
 		path: "/Create",
 		name: "CreateCard",
 		component: CreateCard,
+	},
+	{
+		path: "/Gallery",
+		name: "Gallery",
+		component: Gallery,
 	},
 
 ];

@@ -129,7 +129,7 @@
                     </div>
                 </div>
                 <transition name="fade-in" mode="out-in">
-                    <h2 :style="{visibility: uploaded ? 'visible' : 'hidden'}">Your card was added to the deck!</h2>
+                    <h2 :style="{ visibility: uploaded ? 'visible' : 'hidden' }">{{uploadMessage}}</h2>
                 </transition>
             </div>
         </transition>
@@ -171,7 +171,8 @@ export default {
             groupMessage: "Let's not forget the group!",
             imageMessage: "Let's not forget the image!",
         });
-        const isDisabled = ref(true);
+		const isDisabled = ref(true);
+		const uploadMessage = ref('');
         function flip(card) {
             card.isFlipped = !card.isFlipped;
         }
@@ -237,14 +238,11 @@ export default {
         async function uploadImageToCloudinary(base64Encoded) {
             loading.value = true;
             try {
-                let response = await fetch(
-                    "/api/uploadImage",
-                    {
-                        method: "POST",
-                        body: JSON.stringify({ data: base64Encoded }),
-                        headers: { "Content-type": "application/json" },
-                    }
-                );
+                let response = await fetch("/api/uploadImage", {
+                    method: "POST",
+                    body: JSON.stringify({ data: base64Encoded }),
+                    headers: { "Content-type": "application/json" },
+                });
                 let data = await response.json();
                 let newCard = {
                     name: form.name,
@@ -258,37 +256,40 @@ export default {
             } catch (error) {
                 loading.value = false;
                 console.log(error);
+                uploadedStatus("fail", error.message);
                 // form.image = error.err;
             }
         }
-        function uploadedSuccesfully() {
-            uploaded.value = true;
-            setTimeout(() => (uploaded.value = false), 3000);
+        function uploadedStatus(status) {
+			uploadMessage.value = false;
+            if (status === "success") {
+				uploadMessage.value = 'Success! Your card was added to the deck.';
+                uploaded.value = true;
+				setTimeout(() => (uploaded.value = false), 3000);
+				
+            } else if (status === "fail") {
+				uploadMessage.value = 'Something went wrong, try again later.';
+                uploaded.value = true;
+            }
         }
         async function addNewCard(newCard) {
-            console.log(JSON.stringify(newCard));
             try {
-                const response = await fetch(
-                    "/api/addCard",
-                    {
-                        headers: {
-                            Accept: "application/json",
-                            "Content-Type": "application/json",
-                        },
-                        method: "POST",
-                        body: JSON.stringify(newCard),
-                    }
-                );
-                const text = await response.text();
-                let data = JSON.parse(text);
-                console.log(data);
+                await fetch("/api/addCard", {
+                    headers: {
+                        Accept: "application/json",
+                        "Content-Type": "application/json",
+                    },
+                    method: "POST",
+                    body: JSON.stringify(newCard),
+                });
+                uploadedStatus("success");
+                resetForm();
+                loading.value = false;
             } catch (error) {
                 console.log(error);
+                uploadedStatus("fail");
                 // form.image = error.err
             }
-            resetForm();
-            uploadedSuccesfully();
-            loading.value = false;
         }
         return {
             flip,
@@ -300,7 +301,8 @@ export default {
             validateName,
             validateGroup,
             validateImage,
-            uploaded,
+			uploaded,
+			uploadMessage
         };
     },
 };
@@ -340,24 +342,24 @@ h1 {
     display: flex;
     flex-direction: column;
     height: 100%;
-	width:40%;
+    width: 40%;
     justify-content: space-evenly;
 }
 .input-container {
     display: flex;
     flex-direction: column;
-	width:100%;
+    width: 100%;
 }
-.input-container input{
-	width:90%;
+.input-container input {
+    width: 90%;
 }
 .button-div {
     display: flex;
     width: 90%;
     justify-content: flex-end;
 }
-.button-div label{
-	margin-right:2rem;
+.button-div label {
+    margin-right: 2rem;
 }
 .card-div {
     display: flex;
@@ -430,7 +432,7 @@ label.input-label.move-up {
     }
     .form-container {
         height: 90%;
-		width:50%;
+        width: 50%;
     }
 
     .scene {

@@ -21,7 +21,11 @@ app.use(cors());
 // add middlewares
 app.use(express.static(path.join(__dirname, '../dist')))
 
-
+app.get('/api/getAllCards', (req, res) => {
+	getAll(dataOrError => {
+		res.send(dataOrError);
+	},'Cards');
+});
 app.get('/api/getCards/:group/:amount', (req, res) => {
 	getGroupOfCollection(dataOrError => {
 		res.send(dataOrError);

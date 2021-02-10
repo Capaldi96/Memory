@@ -1,54 +1,48 @@
 <template>
     <div class="content">
-        <img src="../assets/name.svg" alt="MemoryT" id="name-img" />
-        <div class="settings">
-            <div class="diff-carousel">
-                <div
-                    class="icon"
-                    @click="nextOrPrevious(diffCarousel, 'previous')"
-                >
-                    <div class="arrow left-arrow"></div>
-                </div>
-                <div class="scene">
-                    <div class="carousel" ref="diffCarousel">
-                        <div
-                            class="carousel__cell"
-                            v-for="(difficulty, i) in difficulties"
-                            :key="i"
-                        >
-                            {{ difficulty }}
-                        </div>
+        <!-- <div class="settings"> -->
+        <h1>Select theme and difficulty</h1>
+        <div class="diff-carousel">
+            <div class="icon" @click="nextOrPrevious(diffCarousel, 'previous')">
+                <div class="arrow left-arrow"></div>
+            </div>
+            <div class="scene">
+                <div class="carousel" ref="diffCarousel">
+                    <div
+                        class="carousel__cell"
+                        v-for="(difficulty, i) in difficulties"
+                        :key="i"
+                    >
+                        {{ difficulty }}
                     </div>
                 </div>
-                <div class="icon" @click="nextOrPrevious(diffCarousel, 'next')">
-                    <div class="arrow right-arrow"></div>
-                </div>
             </div>
-            <div class="theme-carousel">
-                <div
-                    class="icon"
-                    @click="nextOrPrevious(themeCarousel, 'previous')"
-                >
-                    <div class="arrow left-arrow"></div>
-                </div>
-                <div class="scene">
-                    <div class="carousel" ref="themeCarousel">
-                        <div
-                            class="carousel__cell"
-                            v-for="(theme, i) in themes"
-                            :key="i"
-                        >
-                            {{ theme }}
-                        </div>
+            <div class="icon" @click="nextOrPrevious(diffCarousel, 'next')">
+                <div class="arrow right-arrow"></div>
+            </div>
+        </div>
+        <div class="theme-carousel">
+            <div
+                class="icon"
+                @click="nextOrPrevious(themeCarousel, 'previous')"
+            >
+                <div class="arrow left-arrow"></div>
+            </div>
+            <div class="scene">
+                <div class="carousel" ref="themeCarousel">
+                    <div
+                        class="carousel__cell"
+                        v-for="(theme, i) in themes"
+                        :key="i"
+                    >
+                        {{ theme }}
                     </div>
                 </div>
-                <div
-                    class="icon"
-                    @click="nextOrPrevious(themeCarousel, 'next')"
-                >
-                    <div class="arrow right-arrow"></div>
-                </div>
             </div>
+            <div class="icon" @click="nextOrPrevious(themeCarousel, 'next')">
+                <div class="arrow right-arrow"></div>
+            </div>
+            <!-- </div> -->
         </div>
         <router-link
             class="button primary-button"
@@ -60,7 +54,7 @@
                 },
             }"
             @click="gameSettings()"
-            >Start</router-link
+            >Start Game</router-link
         >
     </div>
 </template>
@@ -90,8 +84,8 @@ export default {
                 "translateZ(15rem) rotateY(" + angle + "deg)";
         }
         function hideOptionbehindSelected(index, direction) {
-			// hides the option that is behind the selected one...
-			// temporarily shitty solution
+            // hides the option that is behind the selected one...
+            // temporarily shitty solution
             let remove;
             let show;
             if (direction === "previous") {
@@ -113,8 +107,8 @@ export default {
                         show = 2;
                         break;
                 }
-            } else{
-				switch (index.mod(themes.length)) {
+            } else {
+                switch (index.mod(themes.length)) {
                     case 0:
                         remove = 2;
                         show = 1;
@@ -132,7 +126,7 @@ export default {
                         show = 0;
                         break;
                 }
-			}
+            }
             themeCarousel.value.children[show].style.opacity = 1;
             themeCarousel.value.children[remove].style.opacity = 0;
         }
@@ -178,23 +172,19 @@ export default {
 <style scoped>
 .content {
     width: 100%;
-    height: 90%;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
+}
+.content h1 {
+    font-size: 3rem;
 }
 .scene {
     position: relative;
     width: 300px;
     perspective: 1000px;
-}
-.settings {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    width: 100%;
-    height: 70%;
 }
 .diff-carousel,
 .theme-carousel {
@@ -215,7 +205,7 @@ export default {
     position: absolute;
     width: 100%;
     height: 100%;
-    font-size: 2rem;
+    font-size: 1.5rem;
     display: grid;
     place-items: center;
     transition: transform 1s, opacity 1s;
@@ -232,17 +222,17 @@ export default {
     transform: rotateY(240deg) translateZ(20rem);
 }
 .theme-carousel .carousel__cell:nth-child(1) {
-    transform: rotateY(0deg) translateZ(20rem);
+    transform: rotateY(0deg) translateZ(18rem);
 }
 .theme-carousel .carousel__cell:nth-child(2) {
-    transform: rotateY(90deg) translateZ(20rem);
+    transform: rotateY(90deg) translateZ(18rem);
 }
 .theme-carousel .carousel__cell:nth-child(3) {
-    transform: rotateY(180deg) translateZ(20rem);
-	opacity: 0;
+    transform: rotateY(180deg) translateZ(18rem);
+    opacity: 0;
 }
 .theme-carousel .carousel__cell:nth-child(4) {
-    transform: rotateY(270deg) translateZ(20rem);
+    transform: rotateY(270deg) translateZ(18rem);
 }
 
 /* arrow */
@@ -306,9 +296,6 @@ export default {
 /* ------- iPad 3, 4 and Pro 9.7" ------- */
 /* Portrait */
 @media only screen and (min-width: 1024px) and (max-height: 1366px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1.5) {
-    .settings {
-        height: 60%;
-    }
     .diff-carousel .carousel__cell:nth-child(1) {
         transform: rotateY(0deg) translateZ(14rem);
     }
@@ -360,9 +347,9 @@ export default {
 /* IPAD 1,2, mini */
 /* IPAD 1,2, mini PORTRAIT*/
 @media only screen and (min-width: 768px) and (max-height: 1024px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1) {
-    .settings {
-        height: 60%;
-    }
+	.content h1{
+		font-size: 2.5rem;
+	}
     .diff-carousel .carousel__cell:nth-child(1) {
         transform: rotateY(0deg) translateZ(10rem);
     }

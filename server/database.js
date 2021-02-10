@@ -121,5 +121,5 @@ module.exports = {
 	getAll,
 	addCard,
 	getGroupOfCollection,
-	addToScoreboard
+	addToScoreboard,
 }

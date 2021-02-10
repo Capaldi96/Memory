@@ -1,7 +1,7 @@
 <template>
     <div class="content">
         <img src="../assets/name.svg" alt="MemoryT" id="name-img" />
-        <div className="card-grid">
+        <div class="card-grid">
             <div
                 class="scene scene-card"
                 v-for="(card, index) in cards"
@@ -40,9 +40,16 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 export default {
+
     setup() {
+		onMounted(()=>{
+			setTimeout(()=>{
+				flipAllCards();
+			},1500);
+			
+		});
         const cards = ref([
             {
                 header: "A Match:",
@@ -69,11 +76,16 @@ export default {
                 isFlipped: false,
             },
         ]);
-
+        function flipAllCards() {
+            cards.value.forEach((element, index) => {
+                setTimeout(() => {
+                    element.isFlipped = true;
+                }, index * 200);
+            });
+        }
         function flip(card) {
             card.isFlipped = !card.isFlipped;
         }
-        setTimeout(() => flip(cards.value[0]), 1500);
         return { cards, flip };
     },
 };
@@ -101,7 +113,7 @@ export default {
     perspective: 600px;
 }
 .card-face-back {
-    padding: 1rem 0;
+    padding: 1rem;
 }
 .button-div {
     display: flex;
@@ -151,9 +163,18 @@ export default {
         grid-template-columns: 12rem 12rem;
         grid-gap: 2rem;
     }
+    ::-webkit-scrollbar {
+        width: 1.5rem;
+    }
+    ::-webkit-scrollbar-track {
+        border-radius: 20px;
+    }
+    ::-webkit-scrollbar-thumb {
+        border-radius: 20px;
+    }
 }
-/* ----------- iPhone X ----------- */
-/* Portrait */
+/*----------- iPhone X -----------
+Portrait
 @media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: portrait) {
     .card-grid {
         grid-template-columns: 10rem 10rem;
@@ -176,7 +197,7 @@ export default {
     }
 }
 
-/* Landscape */
+Landscape
 @media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: landscape) {
     .content {
         height: 100%;
@@ -202,5 +223,5 @@ export default {
     .card-face-back p {
         font-size: unset;
     }
-}
+} */
 </style>

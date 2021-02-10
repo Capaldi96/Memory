@@ -9,6 +9,7 @@
             <router-link to="/">Tutorial</router-link>
             <router-link to="/Setup">Play</router-link>
             <router-link to="/Scoreboard/Easy">Scoreboard</router-link>
+			<router-link to="/Gallery">Gallery</router-link>
             <router-link to="/Create">Create a card</router-link>
         </div>
     </div>
@@ -99,6 +100,7 @@ body {
     font-family: "Luckiest Guy", cursive;
     margin: 0;
     height: 100vh;
+	font-size: 16px;
 }
 #burger {
     display: block;
@@ -141,6 +143,27 @@ body {
 #burger.burgerActive span:nth-last-child(2) {
     opacity: 0;
     transform: rotate(0deg) scale(0.2, 0.2);
+}
+/* width */
+::-webkit-scrollbar {
+    width: 1rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #7b2cbf;
+    border-radius: 8px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #c77dff;
+    border-radius: 8px;
+	cursor: pointer;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
 }
 .button {
     display: grid;
@@ -375,8 +398,8 @@ p {
     }
 }
 
-/* ----------- iPhone X ----------- */
-/* Portrait */
+/* ----------- iPhone X -----------
+Portrait
 @media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: portrait) {
     #name-img {
         display: none;
@@ -399,7 +422,7 @@ p {
     }
 }
 
-/* Landscape */
+Landscape
 @media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: landscape) {
     #name-img {
         display: none;
@@ -420,5 +443,5 @@ p {
     .nav-links a {
         font-size: 1.2rem;
     }
-}
+} */
 </style>

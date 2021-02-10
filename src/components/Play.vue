@@ -1,6 +1,9 @@
 <template>
     <div class="play-content">
-        <div v-if="!finished" class="game-content">
+        <div v-if="!request.status" class="error-content">
+            <error :errorMessage="request.message"></error>
+        </div>
+        <div v-if="!finished && request.status" class="game-content">
             <div id="score">
                 <h1>Score:{{ score }}</h1>
                 <h1>{{ min }}:{{ sec }}</h1>
@@ -29,8 +32,8 @@
             v-if="finished"
             :score="score"
             :difficulty="props.difficulty"
-			:theme="props.theme"
-			:time="time"
+            :theme="props.theme"
+            :time="time"
         ></submitScoreComponent>
     </div>
 </template>
@@ -39,6 +42,7 @@
 import { onBeforeMount, reactive, ref } from "vue";
 import axios from "axios";
 import submitScoreComponent from "./submitScoreComponent.vue";
+import Error from "./Error.vue";
 export default {
     props: {
         theme: String,
@@ -46,9 +50,10 @@ export default {
     },
     components: {
         submitScoreComponent,
+        Error,
     },
     computed: {
-        sec() {	
+        sec() {
             if (this.time.seconds < 10) {
                 return "0" + this.time.seconds;
             }
@@ -83,14 +88,18 @@ export default {
         const memoryCards = ref([]);
         const memoryCardsGridClass = ref(null);
         const finished = ref(false);
+        const request = reactive({
+            status: null,
+            message: "",
+        });
         const cards = ref([]);
         const score = ref(0);
-		const time = reactive({
+        const time = reactive({
             start: false,
             minutes: 0,
             seconds: 0,
         });
-		let interval;
+        let interval;
         let flippedCards = [];
         async function getCards(group, amount) {
             await axios
@@ -98,9 +107,11 @@ export default {
                 .then((res) => {
                     cards.value = res.data;
                     duplicateAndShuffle(cards);
+                    request.status = true;
                 })
                 .catch((err) => {
-                    console.log("Something went wrong", err);
+                    request.message = err.message;
+                    request.status = false;
                 });
         }
         /* Randomize array in-place using Durstenfeld shuffle algorithm */
@@ -171,6 +182,7 @@ export default {
             score,
             props,
             time,
+            request,
         };
     },
 };
@@ -181,7 +193,8 @@ export default {
     width: 100%;
     height: 100%;
 }
-.game-content {
+.game-content,
+.error-content {
     width: 100%;
     height: 100%;
     display: grid;
@@ -240,7 +253,7 @@ export default {
     position: absolute;
     right: 2rem;
     top: 1rem;
-	text-align: center;
+    text-align: center;
 }
 .remove-card {
     animation-name: disappear;
@@ -249,6 +262,11 @@ export default {
     animation-delay: 0;
     animation-direction: alternate;
     animation-fill-mode: forwards;
+}
+.error-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* ------- iPad 3, 4 and Pro 9.7" ------- */
@@ -260,7 +278,7 @@ export default {
     .flex-12 .scene {
         min-height: 18rem;
         width: 23%;
-		margin:.5rem;
+        margin: 0.5rem;
     }
     .flex-8 {
         width: 100%;
@@ -306,10 +324,10 @@ export default {
 /* IPAD 1,2, mini */
 /* IPAD 1,2, mini PORTRAIT*/
 @media only screen and (min-width: 768px) and (max-height: 1024px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1) {
-    .flex-12{
-		width:100%;
-	}
-	.flex-12 .scene {
+    .flex-12 {
+        width: 100%;
+    }
+    .flex-12 .scene {
         margin: 0.5rem;
         min-height: 15rem;
         width: 22%;
