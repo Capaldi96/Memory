@@ -1,8 +1,5 @@
 <template>
     <div class="play-content">
-        <div v-if="!request.status" class="error-content">
-            <error :errorMessage="request.message"></error>
-        </div>
         <div v-if="!finished && request.status" class="game-content">
             <div id="score">
                 <h1>Score:{{ score }}</h1>
@@ -28,8 +25,11 @@
                 </div>
             </div>
         </div>
+        <div v-else-if="!request.status" class="error-content">
+            <error :errorMessage="request.message"></error>
+        </div>
         <submitScoreComponent
-            v-if="finished"
+            v-else-if="finished"
             :score="score"
             :difficulty="props.difficulty"
             :theme="props.theme"
@@ -89,7 +89,7 @@ export default {
         const memoryCardsGridClass = ref(null);
         const finished = ref(false);
         const request = reactive({
-            status: null,
+            status: true,
             message: "",
         });
         const cards = ref([]);
@@ -105,11 +105,17 @@ export default {
             await axios
                 .get("/api/getCards/" + group + "/" + amount)
                 .then((res) => {
-                    cards.value = res.data;
-                    duplicateAndShuffle(cards);
-                    request.status = true;
+                    if (typeof(res.data) === 'object') {
+                        console.log(res.data);
+                        cards.value = res.data;
+                        duplicateAndShuffle(cards);
+                        request.status = true;
+                    } else{
+						request.status = false;
+					}
                 })
                 .catch((err) => {
+					console.log("error")
                     request.message = err.message;
                     request.status = false;
                 });

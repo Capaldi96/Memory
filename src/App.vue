@@ -248,7 +248,7 @@ input[type="radio"]:checked + label {
     border-radius: 0 5rem 5rem 0;
 }
 body {
-    background: url("./assets/background.png") no-repeat center center fixed;
+    background: url("./assets/background-image.svg") no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -362,7 +362,7 @@ p {
 
 @media only screen and (min-width: 768px) and (max-height: 1366px) and (orientation: portrait) {
     body {
-        background: url("./assets/small-background.png") no-repeat center center
+        background: url("./assets/small-background-image.svg") no-repeat center center
             fixed;
         -webkit-background-size: cover;
         -moz-background-size: cover;
