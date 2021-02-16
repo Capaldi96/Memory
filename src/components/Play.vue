@@ -106,7 +106,6 @@ export default {
                 .get("/api/getCards/" + group + "/" + amount)
                 .then((res) => {
                     if (typeof(res.data) === 'object') {
-                        console.log(res.data);
                         cards.value = res.data;
                         duplicateAndShuffle(cards);
                         request.status = true;
