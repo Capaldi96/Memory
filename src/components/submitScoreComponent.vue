@@ -206,6 +206,11 @@ export default {
     width: 60%;
     height: 80%;
 }
+.input-container{
+	display: flex;
+	flex-direction: column;
+	width:40%;
+}
 .form-text {
     display: flex;
     flex-direction: column;
