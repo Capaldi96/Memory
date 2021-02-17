@@ -110,7 +110,6 @@ export default {
     flex-wrap: wrap;
     width: 100%;
     justify-content: center;
-    padding: 4rem 0;
     height: 80%;
     overflow-y: scroll;
 }
